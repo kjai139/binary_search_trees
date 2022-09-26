@@ -66,6 +66,49 @@ class Tree {
         
     }
 
+    deleteV = (value) => {
+        
+        
+        this.root = this.deleteRec(this.root, value)
+
+
+        
+    }
+    deleteRec = (root, data) => {
+        if (root == null){
+            return root
+        }
+        if (data < root.data) {
+            root.left = this.deleteRec(root.left, data)
+        } else if (data > root.data) {
+            root.right = this.deleteRec(root.right, data)
+        } else {
+            if (root.left == null){
+                return root.right
+            } else if (root.right == null){
+                return root.left
+            } 
+            console.log('smallest:', this.minV(root.right))
+            root.data = this.minV(root.right)
+            root.right = this.deleteRec(root.right, root.data)
+            
+        }
+        console.log('return root', root)
+        return root
+    }
+
+    //get the smallest in the right subtree
+    minV = (root) => {
+        let minV = root.data
+        while (root.left != null){
+            root = root.left
+            minV = root.data
+            console.log('root in while', root)
+        }
+        return minV
+        console.log('minV', minV)
+    }
+
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -84,5 +127,8 @@ a.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324])
 prettyPrint(a.buildTree([1, 7, 4, 23, 8, 9, 4, 3, 5, 7, 9, 67, 6345, 324]))
 console.log(a)
 a.insertV(50)
+a.insertV(10)
 a.insertV(214124)
+prettyPrint(a.root)
+a.deleteV(8)
 prettyPrint(a.root)
