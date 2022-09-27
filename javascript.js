@@ -109,6 +109,129 @@ class Tree {
         console.log('minV', minV)
     }
 
+    find = (value, root = this.root) => {
+        if (root == null){
+            return 'not found'
+        }
+        else if (value > root.data){
+            return this.find(value, root.right)
+        } else if (value < root.data){
+            return this.find(value, root.left)
+        } else if (value == root.data){
+            return root
+        }
+    }
+
+    levelOrder = (root = this.root, queue = [], result =[]) => {
+        if (root == null){
+            return
+        }
+        console.log(root.data)
+        result.push(root.data)
+        queue.shift()
+        if (root.left != null){
+            queue.push(root.left)
+            
+        }
+        if (root.right != null) {
+            queue.push(root.right)
+            
+        }
+        while (queue.length > 0){
+            this.levelOrder(queue[0], queue, result)
+        }
+        
+        return result
+        
+    }
+
+    inOrder = (root = this.root, result =[]) => {
+        if (root == null) {
+            return
+        }
+        this.inOrder(root.left, result)
+        result.push(root.data)
+        this.inOrder(root.right, result)
+        
+        return result
+    }
+
+    preOrder = (root = this.root, result =[]) => {
+        if (root == null){
+            return
+        }
+        result.push(root.data)
+        this.preOrder(root.left, result)
+        this.preOrder(root.right, result)
+
+        return result
+    }
+
+    postOrder = (root = this.root, result = []) => {
+        if (root == null){
+            return
+        }
+        this.postOrder(root.left, result)
+        this.postOrder(root.right, result)
+        result.push(root.data)
+        return result
+    }
+
+    checkHeight = (root = this.root) => {
+        let leftHeight = 0
+        let rightHeight = 0
+
+        let nextLeft = root.left
+        let nextRight = root.right
+        
+        let trueHeight
+        while (nextLeft != null){
+            leftHeight +=1 
+            nextLeft = nextLeft.left
+            
+        }
+
+        while (nextRight != null) {
+            rightHeight += 1
+            nextRight = nextRight.right
+        }
+
+        if (leftHeight > rightHeight) {
+            trueHeight = leftHeight
+        } else if (rightHeight > leftHeight){
+            trueHeight = rightHeight
+        } else if (rightHeight == leftHeight) {
+            trueHeight = rightHeight
+        }
+        return trueHeight
+
+    }
+    checkDepth = (value = 0) => {
+        let root = this.root
+        let depth = 0
+
+        while (root != null){
+            if (value > root.data) {
+                root = root.right
+                depth += 1
+            } else if (value < root.data) {
+                root = root.left
+                depth += 1
+            } else if (value == root.data) {
+                return depth
+            }
+        }
+        return 'not found'
+        
+    }
+
+    isBalanced = (root = this.root) => {
+        if (this.checkHeight(root.left) - this.checkHeight(root.right) >= 1 || this.checkHeight(root.right) - this.checkHeight(root.left) >= 1) {
+            return false
+        }
+        return true
+    }
+
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -131,4 +254,18 @@ a.insertV(10)
 a.insertV(214124)
 prettyPrint(a.root)
 a.deleteV(8)
+
 prettyPrint(a.root)
+
+console.log(a.find(325))
+console.log(a.levelOrder())
+a.inOrder()
+console.log(a.inOrder())
+console.log(a.preOrder())
+console.log(a.postOrder())
+console.log(a.checkHeight())
+console.log(a.checkDepth(9))
+console.log(a.isBalanced())
+// a.insertV(214125)
+// prettyPrint(a.root)
+console.log(a.isBalanced())
