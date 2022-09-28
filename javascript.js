@@ -282,3 +282,7 @@ console.log('balance:', a.isBalanced())
 console.log('in order:', a.inOrder())
 console.log('pre order', a.preOrder())
 console.log('post order', a.postOrder())
+console.log('level order bfs:,', a.levelOrder())
+
+
+
