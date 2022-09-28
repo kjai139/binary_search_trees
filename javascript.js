@@ -152,7 +152,7 @@ class Tree {
         this.inOrder(root.left, result)
         result.push(root.data)
         this.inOrder(root.right, result)
-        
+        // console.log('in order:', result)
         return result
     }
 
@@ -163,6 +163,7 @@ class Tree {
         result.push(root.data)
         this.preOrder(root.left, result)
         this.preOrder(root.right, result)
+        // console.log('pre order:', result)
 
         return result
     }
@@ -174,6 +175,7 @@ class Tree {
         this.postOrder(root.left, result)
         this.postOrder(root.right, result)
         result.push(root.data)
+        // console.log('post order:', result)
         return result
     }
 
@@ -232,6 +234,10 @@ class Tree {
         return true
     }
 
+    rebalance = () => {
+        this.root = this.buildTree(this.inOrder())
+    }
+
 }
 
 const prettyPrint = (node, prefix = '', isLeft = true) => {
@@ -259,13 +265,20 @@ prettyPrint(a.root)
 
 console.log(a.find(325))
 console.log(a.levelOrder())
-a.inOrder()
-console.log(a.inOrder())
-console.log(a.preOrder())
-console.log(a.postOrder())
-console.log(a.checkHeight())
-console.log(a.checkDepth(9))
-console.log(a.isBalanced())
+
+console.log('in order:', a.inOrder())
+console.log('pre order', a.preOrder())
+console.log('post order', a.postOrder())
+// console.log(a.checkHeight())
+// console.log(a.checkDepth(9))
+
 // a.insertV(214125)
 // prettyPrint(a.root)
-console.log(a.isBalanced())
+console.log('balance:', a.isBalanced())
+
+a.rebalance()
+prettyPrint(a.root)
+console.log('balance:', a.isBalanced())
+console.log('in order:', a.inOrder())
+console.log('pre order', a.preOrder())
+console.log('post order', a.postOrder())
